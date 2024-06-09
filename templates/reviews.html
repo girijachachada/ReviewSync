@@ -10,22 +10,42 @@
 </head>
 
 <body>
-    
+
     <div class="container my-3">
         <h1 style="font-family: 'Times New Roman', Times, serif;margin-bottom: 5px;">Movie Reviews</h1>
         <hr style="margin-bottom: 25px;">
-        
+
+        <div class="row">
+            <div class="col">
             {% for review in reviews %}
-            <div class="col-md-4" style="width: 100%;">
+            
                 <div class="card border-dark mb-3 shadow">
                     <div class="card-body">
+                        <p style="font-size: smaller;color: red;">Rotten Tomatoes</p> 
+                        <h5 class="card-title">{{ review.reviewer_name }}</h5>
+                        <p class="card-text">{{ review.review_content }}</p>
+                        
+                    </div>
+                </div>
+            
+            {% endfor %}
+        </div>
+
+        <div class="col">
+            {% for review in other_reviews %}
+            
+                <div class="card border-dark mb-3 shadow">
+                    <div class="card-body">
+                        <p style="font-size: smaller;color: rgb(0, 172, 172);">Letterbox</p>
                         <h5 class="card-title">{{ review.reviewer_name }}</h5>
                         <p class="card-text">{{ review.review_content }}</p>
                     </div>
                 </div>
-            </div>
+            
             {% endfor %}
-        
+        </div>
+    </div>
+
     </div>
 
 </body>

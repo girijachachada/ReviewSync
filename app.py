@@ -7,9 +7,7 @@ app = Flask(__name__)
 app.config["MONGO_URI"] = "mongodb+srv://review123:review123@cluster0.73f4jpp.mongodb.net/movie_reviews"
 app.secret_key = "supersecretkey"
 
-mongo = PyMongo()
-mongo.init_app(app)
-
+mongo = PyMongo(app)
 
 @app.route('/')
 def index():
@@ -20,8 +18,7 @@ def home():
     # Retrieve user's first name from session
     first_name = session.get('first_name', 'Guest')
     movies = mongo.db.movies.find()
-    return render_template('home.html', first_name=first_name,movies=movies)
-
+    return render_template('home.html', first_name=first_name, movies=movies)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -39,7 +36,6 @@ def login():
             flash('Invalid email or password', 'danger')
 
     return render_template('login.html')
-
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -69,8 +65,16 @@ def show_reviews(movie_id):
     # Query MongoDB collection for movie with specified _id
     movie = mongo.db.movies.find_one({"_id": object_id})
     if movie:
+        movie_name = movie.get('movie_name')
+        # Also fetch reviews from another MongoDB collection based on movie name
+        other_reviews = []
+        other_movie = mongo.db.letterboxd_movies.find_one({"title": movie_name})
+        if other_movie:
+            other_reviews = other_movie.get('popular_reviews', [])
         reviews = movie.get('reviews', [])
-    return render_template('reviews.html', reviews=reviews)
+    
+    return render_template('reviews.html', reviews=reviews, other_reviews=other_reviews)
+
 
 @app.route('/about')
 def about():

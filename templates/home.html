@@ -14,6 +14,24 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
+
+        /* Container for horizontal scroll */
+        .scroll-container {
+            overflow-x: auto;
+            white-space: nowrap;
+            padding-bottom: 10px; /* Added padding to avoid cutting off the last card */
+        }
+
+        /* Remove margin and padding from last child of scroll container */
+        .scroll-container > *:last-child {
+            margin-right: 0 !important;
+        }
+
+        /* Display cards inline */
+        .card {
+            display: inline-block;
+            vertical-align: top; /* Align cards to the top of the container */
+        }
     </style>
 </head>
 
@@ -58,16 +76,22 @@
         {% endwith %}
         <h5 style="color: gray;">Welcome to the Review System</h5>
         <h2 style="color: rgb(71, 71, 71);">Hello, {{ first_name }}!</h2>
+        <hr>
 
-        <div class="row">
+        
+        <div class="scroll-container">
+            <h3 style="margin-left: 15px;">Movies</h3>
             {% for movie in movies %}
             <div class="card mx-3 my-3 shadow" style="width: 14rem;">
-                <img src="{{ movie.image_url }}" class="card-img-top" alt="{{ movie.title }}" style="border-radius: 5px;margin-top: 10px;">
+                <img src="{{ movie.image_url }}" class="card-img-top" alt="{{ movie.title }}"
+                    style="border-radius: 5px;">
                 <div class="card-body">
                     <h6 class="card-title">{{ movie.movie_name }}</h6>
                     <p class="card-text" style="font-size: smaller;">Critics Score: {{ movie.scores.critics }}
-                    <br>Audience Score: {{ movie.scores.audience }}</p>
-                    <a href="{{ url_for('show_reviews', movie_id=movie._id) }}" class="btn btn-outline-success" style="text-align: center;width: 100%;">Reviews</a>
+                        <br>Audience Score: {{ movie.scores.audience }}
+                    </p>
+                    <a href="{{ url_for('show_reviews', movie_id=movie._id) }}" class="btn btn-outline-success"
+                        style="text-align: center;width: 100%;">Reviews</a>
                 </div>
             </div>
             {% endfor %}
