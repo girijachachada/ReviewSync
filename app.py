@@ -1,12 +1,15 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_pymongo import PyMongo
 from werkzeug.security import generate_password_hash, check_password_hash
+from bson import ObjectId
 
 app = Flask(__name__)
-app.config["MONGO_URI"] = "mongodb://localhost:27017/review_system"
+app.config["MONGO_URI"] = "mongodb+srv://review123:review123@cluster0.73f4jpp.mongodb.net/movie_reviews"
 app.secret_key = "supersecretkey"
 
-mongo = PyMongo(app)
+mongo = PyMongo()
+mongo.init_app(app)
+
 
 @app.route('/')
 def index():
@@ -16,8 +19,8 @@ def index():
 def home():
     # Retrieve user's first name from session
     first_name = session.get('first_name', 'Guest')
-    print("First name retrieved from session:", first_name)  # Debug statement
-    return render_template('home.html', first_name=first_name)
+    movies = mongo.db.movies.find()
+    return render_template('home.html', first_name=first_name,movies=movies)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -56,6 +59,18 @@ def signup():
             return redirect(url_for('home'))
 
     return render_template('signup.html')
+
+@app.route('/reviews/<movie_id>')
+def show_reviews(movie_id):
+    # Retrieve reviews for the selected movie from MongoDB
+    reviews = []
+    object_id = ObjectId(movie_id)
+    
+    # Query MongoDB collection for movie with specified _id
+    movie = mongo.db.movies.find_one({"_id": object_id})
+    if movie:
+        reviews = movie.get('reviews', [])
+    return render_template('reviews.html', reviews=reviews)
 
 @app.route('/about')
 def about():

@@ -49,26 +49,21 @@
         </div>
         {% endif %}
         {% endwith %}
-        <h1>Welcome to the Review System</h1>
-        <p>Hello, {{ first_name }}</p>
+        <h5 style="color: gray;">Welcome to the Review System</h5>
+        <h2 style="color: rgb(71, 71, 71);">Hello, {{ first_name }}!</h2>
 
         <div class="row">
-            <div class="card mx-3" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="...">
+            {% for movie in movies %}
+            <div class="card mx-3 my-3" style="width: 18rem;">
+                <img src="{{ movie.image_url }}" class="card-img-top" alt="{{ movie.title }}" style="border-radius: 5px;margin-top: 10px;">
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Rating - 3.5</p>
-                    <a href="#" class="btn btn-primary">Reviews</a>
+                    <h5 class="card-title">{{ movie.movie_name }}</h5>
+                    <p class="card-text">Critics Score: {{ movie.scores.critics }}</p>
+                    <p class="card-text">Audience Score: {{ movie.scores.audience }}</p>
+                    <a href="{{ url_for('show_reviews', movie_id=movie._id) }}" class="btn btn-primary">Reviews</a>
                 </div>
             </div>
-            <div class="card mx-3" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Rating - 3.5</p>
-                    <a href="#" class="btn btn-primary">Reviews</a>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </body>
