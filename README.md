@@ -3,6 +3,7 @@
 ReviewSync is a powerful yet user-friendly review management system designed to streamline the process of gathering, organizing, and analyzing customer reviews for businesses. With ReviewSync, businesses can efficiently manage their online reputation, gain valuable insights from customer feedback, and make data-driven decisions to improve their products or services.
 
 **Features**
+
 Centralized Review Management:
 Imagine you're a business owner trying to keep track of what customers are saying about your products or services. With ReviewSync, you can aggregate customer reviews from various sources like social media, review websites, and e-commerce platforms into one convenient dashboard. This means no more jumping between different platforms to check reviews. Everything you need is right at your fingertips, making it easy to stay on top of customer feedback and respond promptly.
 
