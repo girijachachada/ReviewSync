@@ -96,6 +96,24 @@
             </div>
             {% endfor %}
         </div>
+
+        <div class="scroll-container my-5">
+            <h3 style="margin-left: 15px;">Phones</h3>
+            {% for phone in phones %}
+            <div class="card mx-3 my-3 shadow" style="width: 14rem;">
+                <img src="{{ phone.image_url }}" class="card-img-top" alt="{{ phone.phone_name }}"
+                    style="border-radius: 5px; max-height: 125px;">
+                <div class="card-body">
+                    <h6 class="card-title">{{ phone.phone_name }}</h6>
+                    <p class="card-text" style="font-size: smaller;">Critics Score: {{ phone.critics_rating }}
+                        <!-- <br>Price: {{phone.price_inr}} -->
+                    </p>
+                    <a href="{{ url_for('show_reviews_phone', phone_id=phone._id) }}" class="btn btn-outline-success"
+                        style="text-align: center;width: 100%;">Reviews</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
     </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
